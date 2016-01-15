@@ -14,7 +14,6 @@ module WeMeet
 			expect(@user.to_s).to be == "Daniel Caballero Rodriguez"
 		end
 		it "can authenticate" do
-			puts @user.inspect
 			expect(@user.login(@pass)).to be true
 		end
 		it "can change the password" do
