@@ -22,6 +22,11 @@ module WeMeet
 			expect(@user.login(@pass)).to be false
 			expect(@user.login(new_pass)).to be true
 		end
+		it "can set some restaurant preferences"
+		it "has an agenda"
+		it "can set some global dating preferences"
+		it "can create groups"
+		it "can be part of some groups"
 
 	end
 end
