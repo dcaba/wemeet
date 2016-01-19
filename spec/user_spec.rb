@@ -13,6 +13,9 @@ module WeMeet
 		it "prints his complete name as expected" do
 			expect(@user.to_s).to be == "Daniel Caballero Rodriguez"
 		end
+		it "keeps the registered email address" do
+			expect(@user.email).to be == "dani.caba@gmail.com"
+		end
 		it "can authenticate" do
 			expect(@user.login(@pass)).to be true
 		end
