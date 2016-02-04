@@ -5,7 +5,7 @@ module WeMeet
 	end
 
 	class User
-		def initialize(name,surname,email,password)
+		def initialize(name,surname,email,password=SecureRandom.base64(12))
 			super(name.capitalize,WeMeet::capitalize_sentence(surname),email,password)
 		end
 		def login(suplied_pass)

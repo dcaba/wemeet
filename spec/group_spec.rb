@@ -38,8 +38,18 @@ module WeMeet
 			it "has a wall where members can write"
 		end	
 		context "with an additional member" do
-			it "can change the ownership to another group member"
-			it "any member can leave"
+			before do
+				@user = User.new("Lina","Far","email@email.com")
+				@group.add_member(@user)
+			end
+			it "can change the ownership to another group member" do
+				@group.swap_ownership
+				expect(@group.owner).to be == @user
+			end
+			it "any member can leave" do
+				@group.leave(@user)
+				expect(@group).not_to have_member @user
+			end
 		end
 
 	end

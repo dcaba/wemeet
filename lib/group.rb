@@ -1,3 +1,4 @@
+require_relative 'user'
 
 module WeMeet
 	GADDRESS_SUFFIX="wemeet.com"
