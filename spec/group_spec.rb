@@ -25,7 +25,7 @@ module WeMeet
 			end
 
 			it "contains, at least, the owner" do
-				expect(@group).to have_member @owner
+				expect(@group).to have_as_member @owner
 			end
 
 			it "prints his info as expected" do
@@ -36,19 +36,25 @@ module WeMeet
 			it "has a preferred area"
 			it "has a default frequency"
 			it "has a wall where members can write"
+			it "the owner, and only member, cannot swap ownership or leave"
 		end	
 		context "with an additional member" do
 			before do
 				@user = User.new("Lina","Far","email@email.com")
 				@group.add_member(@user)
 			end
+			it "has the expected two members"
+			it "doesnt have a third member"
 			it "can change the ownership to another group member" do
 				@group.swap_ownership
 				expect(@group.owner).to be == @user
 			end
 			it "any member can leave" do
 				@group.leave(@user)
-				expect(@group).not_to have_member @user
+				expect(@group).not_to have_as_member @user
+				@group.add_member(@user)
+				@group.leave(@owner)
+				expect(@group).not_to have_as_member @owner
 			end
 		end
 

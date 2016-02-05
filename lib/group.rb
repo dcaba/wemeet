@@ -16,8 +16,21 @@ module WeMeet
 			"#{name.downcase.tr(" ",".")}@#{GADDRESS_SUFFIX}"
 		end
 
-		def has_member?(user)
+		def add_member(user)
+			@members << user unless has_as_member?(user)
+		end
+
+		def has_as_member?(user)
 			return @members.include? user
+		end
+
+		def swap_ownership
+			@members.length == 1 ? raise("Owner is the only member") : @owner = (@members - [@owner]).sample 
+		end
+
+		def leave(user)
+			swap_ownership if @owner == user 
+			@members.delete(user)
 		end
 
 		def to_s

@@ -41,7 +41,7 @@ module WeMeet
 		end
 		it "can be part of groups owned by other users" do
 			@user2 = User.new("lina","far","lina@mymail.com")
-			@user2.create_group("family")	
+			new_group = @user2.create_group("family")	
 			@user2.each_owned_group do |group|
 				new_group = group if group.name == "family" 
 				new_group.add_member(@user) 
