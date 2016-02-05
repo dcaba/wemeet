@@ -1,4 +1,5 @@
 require_relative 'group'
+require 'securerandom'
 
 module WeMeet
 	User = Struct.new(:name,:surname,:email,:password)
