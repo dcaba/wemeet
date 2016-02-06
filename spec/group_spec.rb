@@ -35,7 +35,7 @@ module WeMeet
 			it "has an agenda"
 			it "has a preferred area"
 			it "has a default frequency"
-			it "has a wall where members can write"
+			it "has a wall where members can send messages" 
 			it "the owner, and only member, cannot swap ownership or leave"
 		end	
 		context "with an additional member" do
