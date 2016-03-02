@@ -1,6 +1,7 @@
 # encoding: utf-8
 require 'group'
 require 'user'
+require 'message'
 
 module WeMeet 
 	describe Group do
@@ -35,16 +36,38 @@ module WeMeet
 			it "has an agenda"
 			it "has a preferred area"
 			it "has a default frequency"
-			it "has a wall where members can send messages" 
-			it "the owner, and only member, cannot swap ownership or leave"
+			it "has a wall where members can send messages" do
+				message = Message.new("Hello world!",@owner)
+				@group.send_message(message)
+				messages = @group.get_messages
+				expect(messages.pop).to be == message
+			end
+			it "the owner, and only member, cannot swap ownership or leave" do
+				begin
+					@group.swap_ownership
+				rescue RuntimeError => e
+					puts e.class
+				end
+
+			end
 		end	
 		context "with an additional member" do
 			before do
 				@user = User.new("Lina","Far","email@email.com")
 				@group.add_member(@user)
 			end
-			it "has the expected two members"
-			it "doesnt have a third member"
+
+			it "has the expected two members" do
+				expect(@group).to have_as_member @owner
+				expect(@group).to have_as_member @user
+			end
+
+			it "doesnt have a third member" do
+				num_members = 0
+				@group.each_member { num_members += 1}
+				expect(num_members).to be 2
+			end
+
 			it "can change the ownership to another group member" do
 				@group.swap_ownership
 				expect(@group.owner).to be == @user

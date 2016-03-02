@@ -1,4 +1,5 @@
 require_relative 'user'
+require_relative 'message'
 
 module WeMeet
 	GADDRESS_SUFFIX="wemeet.com"
@@ -10,6 +11,7 @@ module WeMeet
 			@name = name.chomp
 			@owner = owner
 			@members = [owner]
+			@messages = Array.new
 		end
 
 		def email
@@ -24,6 +26,10 @@ module WeMeet
 			return @members.include? user
 		end
 
+		def each_member
+			@members.each { |member| yield member }
+		end	
+
 		def swap_ownership
 			@members.length == 1 ? raise("Owner is the only member") : @owner = (@members - [@owner]).sample 
 		end
@@ -33,6 +39,13 @@ module WeMeet
 			@members.delete(user)
 		end
 
+		def send_message(message)
+			@messages << message
+		end
+
+		def get_messages
+			@messages
+		end
 		def to_s
 			"#{@name} group managed by #{@owner} with #{@members.size} members" 
 		end
