@@ -43,12 +43,7 @@ module WeMeet
 				expect(messages.pop).to be == message
 			end
 			it "the owner, and only member, cannot swap ownership or leave" do
-				begin
-					@group.swap_ownership
-				rescue RuntimeError => e
-					puts e.class
-				end
-
+				expect {@group.swap_ownership}.to raise_error(RuntimeError,"Owner is the only member")
 			end
 		end	
 		context "with an additional member" do
