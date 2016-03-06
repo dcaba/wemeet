@@ -28,7 +28,7 @@ module WeMeet
 			expect(@user.login(new_pass)).to be true
 		end
 		it "can have some activities and time preferences" 
-		it "can set some restaurant preferences"
+		it "can set some restaurant&dinner preferences"
 		it "has an agenda"
 		it "can set some global dating preferences"
 		it "can create groups that will own" do
