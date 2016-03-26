@@ -1,19 +1,24 @@
 module WeMeet
 
 	class Activity
-		attr_accessor :name, :aliases
+		attr_accessor :name
 		def initialize(name)
 			@name = name
-			@aliases = [name.downcase]
+			@aliases = Hash.new
+			@aliases[name.downcase] = name
 		end
 		
 		def alias(aname)
-			@aliases << aname.downcase unless @aliases.include? aname.downcase
+			@aliases[aname.downcase] = aname unless (@aliases.keys + @aliases.values).include? aname.downcase
+		end
+
+		def aliases
+			@aliases.values
 		end
 
 		def similar_to?(other)
 			found = false
-			@aliases.each do |as|
+			@aliases.keys.each do |as|
 				found = true if as.include? other.downcase
 			end
 			return found
