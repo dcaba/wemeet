@@ -58,13 +58,22 @@ module WeMeet
 		context "with 4 activities in 2 categories" do
 			before do
 				@activity1 = Activity.new("Football")
+				@activity1.alias "Futbol"
 				@activity2 = Activity.new("Basketball")
+				@activity2.alias "Basquet"
+				@activity3 = Activity.new("Playing an instrument")
+				@activity4 = Activity.new("Live metal concerts")
 				@act = Activities.instance
 				@act << @activity1
+			end
+			after do
+				@act.clean
 			end
 			it "can categorize activities"
 			it "can retrieve activities per category"
 			it "support partial text searches with category filters"
+			it "cannot accept activities clashing with the registered ones"
+			# this includes aliases and activity names
 		end
 	end
 end
