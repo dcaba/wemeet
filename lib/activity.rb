@@ -1,11 +1,14 @@
+require_relative "activity_category"
+
 module WeMeet
 
 	class Activity
 		attr_accessor :name
-		def initialize(name)
+		def initialize(name,category=nil)
 			@name = name
 			@aliases = Hash.new
 			@aliases[name.downcase] = name
+			@category = ActivityCategory.new
 		end
 		
 		def alias(aname)
