@@ -4,6 +4,15 @@ require 'singleton'
 module WeMeet
 	class Activities < Array
 		include Singleton
+		def initialize
+			@categories = Array.new
+			super
+		end
+
+		def <<(activity)
+			register_category(activity.category) unless activity.category.nil?
+			super
+		end
 
 		def search(term)
 			return self.select {|act| act.similar_to? term}
@@ -12,6 +21,19 @@ module WeMeet
 		def remove(term)
 			self.reject! { |act| act.name == term }
 			return
+		end
+
+		def register_category(category)
+			@categories << category unless search_categories category
+		end
+		def list_categories
+			@categories
+		end
+
+		def search_categories(category)
+			found = false
+			@categories.each {|cat| found = true if cat.name.downcase == category.name}
+			return found
 		end
 
 		def clean

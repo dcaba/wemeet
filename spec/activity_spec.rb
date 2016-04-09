@@ -1,4 +1,5 @@
 require 'activity'
+require 'activity_category'
 
 module WeMeet
 	describe Activity do
@@ -11,6 +12,9 @@ module WeMeet
 			end
 			it "support partial text searches" do
 				expect(@activity).to be_similar_to "footbal"
+			end
+			it "has a nil as category" do
+				expect(@activity.category).to be_nil
 			end
 		end
 		context "with aliases" do
@@ -28,6 +32,16 @@ module WeMeet
 				expect(@activity).to be_similar_to "LAN"
 				expect(@activity).to be_similar_to "network"
 				expect(@activity).to be_similar_to "netgaming"
+			end
+		end
+		context "with a category" do
+			before do
+				@activity = Activity.new("Network gaming")
+				@category = ActivityCategory.new("Technology")
+				@activity.category = @category
+			end
+			it "has the expected aliases" do
+				expect(@activity.category).to be == @category
 			end
 		end
 	end
