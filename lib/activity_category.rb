@@ -1,9 +1,9 @@
 module WeMeet
-	ActivityCategory = Struct.new(:name)
-
 	class ActivityCategory
-		def new(name)
-			super name.capitalize
+		attr_accessor :name
+
+		def initialize(name)
+			@name = name.capitalize
 		end
 
 		def similar_to?(other)
