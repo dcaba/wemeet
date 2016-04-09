@@ -10,11 +10,10 @@ module WeMeet
 	class User
 		def initialize(name,surname,email,password=SecureRandom.base64(12))
 			@owned_groups = Array.new
-			super(name.capitalize,WeMeet::capitalize_sentence(surname),email,password)
+			super(name.capitalize,WeMeet.capitalize_sentence(surname),email,password)
 		end
 
 		def login(suplied_pass)
-			#puts "supplied: #{suplied_pass}, stored:#{self.password}"
 			self.password == suplied_pass
 		end
 
