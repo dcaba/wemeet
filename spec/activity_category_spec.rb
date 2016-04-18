@@ -7,7 +7,6 @@ module WeMeet
 				@category = ActivityCategory.new("sports")
 			end
 			it "has the expected category name" do
-				puts @category.inspect
 				expect(@category.name).to be == "Sports"
 				expect(@category.name).not_to be == "sports"
 			end

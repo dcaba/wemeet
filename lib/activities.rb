@@ -14,8 +14,8 @@ module WeMeet
 			super
 		end
 
-		def search(term)
-			return self.select {|act| act.similar_to? term}
+		def search(term,category=nil)
+			return self.select {|act| act.similar_to? term and category == act.category}
 		end
 
 		def remove(term)
@@ -32,7 +32,7 @@ module WeMeet
 
 		def search_categories(category)
 			found = false
-			@categories.each {|cat| found = true if cat.name.downcase == category.name}
+			@categories.each {|cat| found = true if cat.name.downcase == category.name.downcase}
 			return found
 		end
 
@@ -40,10 +40,10 @@ module WeMeet
 			self.reject! { true}
 		end
 
-		def list
-			activities_name = []
-			self.each { |act| activities_name << act.name }
-			return activities_name
+		def list(category=nil)
+			activities = []
+			self.each { |act| activities << act }
+			return activities
 		end
 	end
 end
