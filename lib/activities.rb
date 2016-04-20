@@ -32,7 +32,7 @@ module WeMeet
 
 		def search_categories(category)
 			found = false
-			@categories.each {|cat| found = true if cat.name.downcase == category.name.downcase}
+			@categories.each {|cat| found = true if cat == category}
 			return found
 		end
 
