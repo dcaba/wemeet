@@ -37,12 +37,12 @@ module WeMeet
 		end
 
 		def clean
-			self.reject! { true}
+			self.reject! { true }
 		end
 
 		def list(category=nil)
 			activities = []
-			self.each { |act| activities << act }
+			self.each { |act| activities << act if category == nil or act.category == category}
 			return activities
 		end
 	end

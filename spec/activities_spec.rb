@@ -87,8 +87,10 @@ module WeMeet
 			it "can retrieve activities per category" do
 				expect(@act.list(@category1)).to include @activity1
 				expect(@act.list(@category1)).to include @activity2
+				expect(@act.list(@category1).size).to be == 2
 				expect(@act.list(@category2)).to include @activity3
 				expect(@act.list(@category2)).to include @activity4
+				expect(@act.list(@category2).size).to be == 2
 			end
 			it "support partial text searches with category filters" do
 				expect(@act.search("basket",@category1)).not_to include @activity1
