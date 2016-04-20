@@ -15,7 +15,7 @@ module WeMeet
 		end
 
 		def search(term,category=nil)
-			return self.select {|act| act.similar_to? term and (category == act.category || category == nil)}
+			return self.select {|act| act.similar_to? term and (category == act.category or category.nil?)}
 		end
 
 		def remove(term)
@@ -42,7 +42,7 @@ module WeMeet
 
 		def list(category=nil)
 			activities = []
-			self.each { |act| activities << act if category == nil or act.category == category}
+			self.each { |act| activities << act if category.nil? or act.category == category}
 			return activities
 		end
 	end
