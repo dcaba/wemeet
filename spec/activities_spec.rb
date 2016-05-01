@@ -101,10 +101,23 @@ module WeMeet
 			it "support partial text searches without category filters" do
 				expect(@act.search("ball").size).to be == 2
 			end
-			it "cannot accept activities clashing with the registered ones"
-			# this includes aliases and activity names
+			it "cannot accept activities clashing with the registered ones" do
+				@activity5 = Activity.new("futbol",@category1)
+				@activity6 = Activity.new("bol",@category1)
+				@activity6.alias "futbol"
+				@activity7 = Activity.new("basquet",@category1)
+				@activity8 = Activity.new("baloncesto",@category1)
+				@activity8.alias "basquet"
+				expect {@act << @activity5}.to raise_error(RuntimeError,"Activity name already exists")
+				expect {@act << @activity6}.to raise_error(RuntimeError,"Activity alias already exists")
+				expect {@act << @activity7}.to raise_error(RuntimeError,"Activity name already exists")
+				expect {@act << @activity8}.to raise_error(RuntimeError,"Activity alias already exists")
+			end
+
 			it "cannot accept categories clashing with the registered ones"
 			it "accepts additional categories"
+			it "can remove activities, keeping aliases updated"
+			it "can remove categories, only if no activity is associated"
 			it "associates the right original category in case of partial clashes"
 		end
 	end
