@@ -11,11 +11,17 @@ module WeMeet
 
 		def <<(activity)
 			register_category(activity.category) unless activity.category.nil?
-			super
+			search_by_activity(activity) != [] ? raise("Activity already exists") : super
 		end
 
-		def search(term,category=nil)
+		def search_by_term(term,category=nil)
 			return self.select {|act| act.similar_to? term and (category == act.category or category.nil?)}
+		end
+
+		def search_by_activity(activity)
+			rs1 = search_by_term(activity.name,activity.category)
+			activity.aliases.each {|alis| search_by_term(alis,activity.category).each {|found| rs1 << found} }
+			return rs1
 		end
 
 		def remove(term)
