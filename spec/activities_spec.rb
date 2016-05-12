@@ -71,10 +71,20 @@ module WeMeet
 				@activity4 = Activity.new("Live metal concerts",@category2)
 				@act = Activities.instance
 				@act << @activity1
-				@act << @activity2
+				begin
+					@act << @activity2
+				rescue
+				end
 				@act.register_category @category2
-				@act << @activity3
-				@act << @activity4
+				begin 
+					@act << @activity3
+				rescue
+				end
+				begin 
+					@act << @activity4
+				rescue
+				end
+
 			end
 			after do
 				@act.clean
@@ -114,7 +124,10 @@ module WeMeet
 				expect {@act << @activity8}.to raise_error(RuntimeError,"Activity already exists")
 			end
 
-			it "cannot accept categories clashing with the registered ones"
+			it "cannot accept categories clashing with the registered ones" do
+				new_category = ActivityCategory.new("music")
+				expect {@act.register_category new_category}.to raise_error(RuntimeError,"Category already exists")
+			end
 			it "accepts additional categories"
 			it "can remove activities, keeping aliases updated"
 			it "can remove categories, only if no activity is associated"

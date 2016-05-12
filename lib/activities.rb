@@ -10,7 +10,10 @@ module WeMeet
 		end
 
 		def <<(activity)
-			register_category(activity.category) unless activity.category.nil?
+			begin
+				register_category(activity.category) unless activity.category.nil?
+			rescue
+			end
 			search_by_activity(activity) != [] ? raise("Activity already exists") : super
 		end
 
@@ -20,7 +23,7 @@ module WeMeet
 
 		def search_by_activity(activity)
 			rs1 = search_by_term(activity.name,activity.category)
-			activity.aliases.each {|alis| search_by_term(alis,activity.category).each {|found| rs1 << found} }
+			activity.aliases.each {|alias_name| search_by_term(alias_name,activity.category).each {|found| rs1 << found} }
 			return rs1
 		end
 
@@ -30,8 +33,9 @@ module WeMeet
 		end
 
 		def register_category(category)
-			@categories << category unless search_categories category
+			search_categories(category) ? raise("Category already exists") : @categories << category
 		end
+
 		def list_categories
 			@categories
 		end
@@ -44,6 +48,7 @@ module WeMeet
 
 		def clean
 			self.reject! { true }
+			@categories = Array.new
 		end
 
 		def list(category=nil)
