@@ -128,8 +128,21 @@ module WeMeet
 				new_category = ActivityCategory.new("music")
 				expect {@act.register_category new_category}.to raise_error(RuntimeError,"Category already exists")
 			end
-			it "accepts additional categories"
-			it "can remove activities, keeping aliases updated"
+			it "accepts additional categories" do
+				new_category = ActivityCategory.new("bingo")
+				@act.register_category(new_category)
+				expect(@act.list_categories).to include new_category
+				expect(@act.list_categories.size).to be == 3
+			end
+			it "can remove activities by activity name, keeping aliases updated" do
+				@act.remove("football")
+				expect(@act.list).not_to include @activity1
+				expect(@act.list).to include @activity2
+				expect(@act.list.size).to be == 3
+				expect(@act.search_by_term("football")).to be == []
+				expect(@act.search_by_term("futbol")).to be == []
+			end
+			it "can remove activities by alias, keeping aliases updated" 
 			it "can remove categories, only if no activity is associated"
 			it "associates the right original category in case of partial clashes"
 		end

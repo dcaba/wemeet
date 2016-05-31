@@ -28,7 +28,7 @@ module WeMeet
 		end
 
 		def remove(term)
-			self.reject! { |act| act.name == term }
+			self.reject! { |act| act.similar_to? term }
 			return
 		end
 
