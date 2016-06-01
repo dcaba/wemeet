@@ -142,8 +142,22 @@ module WeMeet
 				expect(@act.search_by_term("football")).to be == []
 				expect(@act.search_by_term("futbol")).to be == []
 			end
-			it "can remove activities by alias, keeping aliases updated" 
-			it "can remove categories, only if no activity is associated"
+			it "can remove activities by alias, keeping aliases updated" do
+				@act.remove("futbol")
+				expect(@act.list).not_to include @activity1
+				expect(@act.list).to include @activity2
+				expect(@act.list.size).to be == 3
+				expect(@act.search_by_term("football")).to be == []
+				expect(@act.search_by_term("futbol")).to be == []
+			end
+			it "can remove categories, only if no activity is associated" do
+				category = ActivityCategory.new("sports")
+				expect {@act.remove_category category}.to raise_error(RuntimeError,"Category still associated to a registered activity")
+				@act.list(category).each {|activity| @act.remove(activity.name)}
+			        @act.remove_category category
+				expect(@act.list).not_to include category
+				expect(@act.list_categories.size).to be == 1
+			end
 			it "associates the right original category in case of partial clashes"
 		end
 	end

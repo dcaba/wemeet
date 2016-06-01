@@ -46,6 +46,11 @@ module WeMeet
 			return found
 		end
 
+		def remove_category(category)
+			raise("Category still associated to a registered activity") if search_by_term("",category) != []
+			@categories.reject! {|cat| cat == category }
+		end
+
 		def clean
 			self.reject! { true }
 			@categories = Array.new
