@@ -27,12 +27,15 @@ module WeMeet
 				expect(@activity.aliases).to include "Netgaming"
 				expect(@activity.aliases).to include "LAN parties"
 			end
-			it "support partial text searches" do
+			it "supports partial text searches" do
 				expect(@activity).to be_similar_to "gaming"
 				expect(@activity).to be_similar_to "LAN"
 				expect(@activity).to be_similar_to "network"
 				expect(@activity).to be_similar_to "netgaming"
 			end
+			it "supports comparison also in case the supplied string is a superset" do
+				expect(@activity).to be_similar_to "netgaming in DCs"
+			end	
 		end
 		context "with a category" do
 			before do

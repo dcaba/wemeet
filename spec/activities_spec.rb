@@ -112,16 +112,16 @@ module WeMeet
 				expect(@act.search_by_term("ball").size).to be == 2
 			end
 			it "cannot accept activities clashing with the registered ones" do
-				@activity5 = Activity.new("futbol",@category1)
-				@activity6 = Activity.new("bol",@category1)
-				@activity6.alias "futbol"
-				@activity7 = Activity.new("basquet",@category1)
-				@activity8 = Activity.new("baloncesto",@category1)
-				@activity8.alias "basquet"
-				expect {@act << @activity5}.to raise_error(RuntimeError,"Activity already exists")
-				expect {@act << @activity6}.to raise_error(RuntimeError,"Activity already exists")
-				expect {@act << @activity7}.to raise_error(RuntimeError,"Activity already exists")
-				expect {@act << @activity8}.to raise_error(RuntimeError,"Activity already exists")
+				activity5 = Activity.new("futbol",@category1)
+				activity6 = Activity.new("bol",@category1)
+				activity6.alias "futbol"
+				activity7 = Activity.new("basquet",@category1)
+				activity8 = Activity.new("baloncesto",@category1)
+				activity8.alias "basquet"
+				expect {@act << activity5}.to raise_error(RuntimeError,"Activity already exists")
+				expect {@act << activity6}.to raise_error(RuntimeError,"Activity already exists")
+				expect {@act << activity7}.to raise_error(RuntimeError,"Activity already exists")
+				expect {@act << activity8}.to raise_error(RuntimeError,"Activity already exists")
 			end
 
 			it "cannot accept categories clashing with the registered ones" do
@@ -158,7 +158,11 @@ module WeMeet
 				expect(@act.list).not_to include category
 				expect(@act.list_categories.size).to be == 1
 			end
-			it "associates the right original category in case of partial clashes"
+			it "associates the right original category in case of partial clashes" do
+				newCat = ActivityCategory.new(@category1.name.lowercase + " ")
+				activity5 = Activity.new("badminton",newCat)
+				expect(@act.list(@category1)).to include activity5
+			end
 		end
 	end
 end

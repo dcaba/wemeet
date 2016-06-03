@@ -10,9 +10,14 @@ module WeMeet
 				expect(@category.name).to be == "Sports"
 				expect(@category.name).not_to be == "sports"
 			end
-			it "support partial text searches" do
+			it "supports partial text searches" do
 				expect(@category).to be_similar_to "sPort"
 				expect(@category).not_to be_similar_to "Music"
+			end
+			it "supports similarities comparisons also if the compared string is a supperset" do
+				expect(@category).to be_similar_to "Winter sports"
+				expect(@category).to be_similar_to "sports winter"
+				expect(@category).not_to be_similar_to "winter sport"
 			end
 
 		end
