@@ -73,16 +73,16 @@ module WeMeet
 				@act << @activity1
 				begin
 					@act << @activity2
-				rescue
+				rescue RuntimeError
 				end
 				@act.register_category @category2
 				begin 
 					@act << @activity3
-				rescue
+				rescue RuntimeError
 				end
 				begin 
 					@act << @activity4
-				rescue
+				rescue RuntimeError
 				end
 
 			end

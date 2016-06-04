@@ -12,7 +12,8 @@ module WeMeet
 		def <<(activity)
 			begin
 				register_category(activity.category) unless activity.category.nil?
-			rescue
+			rescue RuntimeError
+				# that's just fine. It may already exist
 			end
 			search_by_activity(activity) != [] ? raise("Activity already exists") : super
 		end
