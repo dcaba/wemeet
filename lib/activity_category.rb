@@ -7,7 +7,7 @@ module WeMeet
 		end
 
 		def similar_to?(other)
-			return @name.downcase.include? other.downcase
+			return (@name.downcase.include? other.downcase or other.downcase.include? @name.downcase)
 		end
 
 		def ==(other)

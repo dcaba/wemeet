@@ -23,7 +23,7 @@ module WeMeet
 		def similar_to?(other)
 			found = false
 			@aliases.keys.each do |as|
-				found = true if as.include? other.downcase
+				found = true if as.include? other.downcase or other.downcase.include? as
 			end
 			return found
 		end
