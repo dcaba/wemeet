@@ -154,7 +154,7 @@ module WeMeet
 				category = ActivityCategory.new("sports")
 				expect {@act.remove_category category}.to raise_error(RuntimeError,"Category still associated to a registered activity")
 				@act.list(category).each {|activity| @act.remove(activity.name)}
-			        @act.remove_category category
+				@act.remove_category category
 				expect(@act.list).not_to include category
 				expect(@act.list_categories.size).to be == 1
 			end
