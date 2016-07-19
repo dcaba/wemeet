@@ -159,9 +159,10 @@ module WeMeet
 				expect(@act.list_categories.size).to be == 1
 			end
 			it "associates the right original category in case of partial clashes" do
-				#newCat = ActivityCategory.new(@category1.name.downcase + " ")
-				#activity5 = Activity.new("badminton",newCat)
-				#expect(@act.list(@category1)).to include activity5
+				newCat = ActivityCategory.new(@category1.name.downcase + " ")
+				activity5 = Activity.new("badminton",newCat)
+				@act << activity5
+				expect(@act.list(@category1)).to include activity5
 			end
 		end
 	end

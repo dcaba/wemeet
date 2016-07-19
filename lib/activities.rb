@@ -43,7 +43,7 @@ module WeMeet
 
 		def search_categories(category)
 			found = false
-			@categories.each {|cat| found = true if cat == category}
+			@categories.each {|cat| found = true if cat.similar_to? category.name}
 			return found
 		end
 
@@ -59,7 +59,7 @@ module WeMeet
 
 		def list(category=nil)
 			activities = []
-			self.each { |act| activities << act if category.nil? or act.category == category}
+			self.each { |act| activities << act if category.nil? or act.category.similar_to? category.name}
 			return activities
 		end
 	end
