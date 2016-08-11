@@ -3,19 +3,22 @@ require 'singleton'
 
 module WeMeet
 	class Activities < Array
+		class ActivityError < StandardError ; end
+
+		class ActivityAlreadyExists < ActivityError ; end
+		class CategoryAlreadyExists < ActivityError ; end
+		class CategoryDependencyError < ActivityError ; end
+
 		include Singleton
+
 		def initialize
 			@categories = Array.new
 			super
 		end
 
 		def <<(activity)
-			begin
-				register_category(activity.category) unless activity.category.nil?
-			rescue RuntimeError
-				# that's just fine. It may already exist
-			end
-			search_by_activity(activity) != [] ? raise("Activity already exists") : super
+			register_category(activity.category) unless activity.category.nil? rescue CategoryAlreadyExists
+			search_by_activity(activity) != [] ? raise(ActivityAlreadyExists,"Activity already exists") : super
 		end
 
 		def search_by_term(term,category=nil)
@@ -34,7 +37,7 @@ module WeMeet
 		end
 
 		def register_category(category)
-			search_categories(category) ? raise("Category already exists") : @categories << category
+			search_categories(category) ? raise(CategoryAlreadyExists,"Category already exists") : @categories << category
 		end
 
 		def list_categories
@@ -48,7 +51,7 @@ module WeMeet
 		end
 
 		def remove_category(category)
-			raise("Category still associated to a registered activity") if search_by_term("",category) != []
+			raise(CategoryDependencyError,"Category still associated to a registered activity") if search_by_term("",category) != []
 			@categories.reject! {|cat| cat == category }
 		end
 

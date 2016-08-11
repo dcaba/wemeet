@@ -71,20 +71,10 @@ module WeMeet
 				@activity4 = Activity.new("Live metal concerts",@category2)
 				@act = Activities.instance
 				@act << @activity1
-				begin
-					@act << @activity2
-				rescue RuntimeError
-				end
-				@act.register_category @category2
-				begin 
-					@act << @activity3
-				rescue RuntimeError
-				end
-				begin 
-					@act << @activity4
-				rescue RuntimeError
-				end
-
+				@act << @activity2 rescue Activities::CategoryAlreadyExists
+				@act.register_category @category2 rescue Activities::CategoryAlreadyExists
+				@act << @activity3 rescue Activities::CategoryAlreadyExists
+				@act << @activity4 rescue Activities::CategoryAlreadyExists
 			end
 			after do
 				@act.clean
@@ -118,15 +108,15 @@ module WeMeet
 				activity7 = Activity.new("basquet",@category1)
 				activity8 = Activity.new("baloncesto",@category1)
 				activity8.alias "basquet"
-				expect {@act << activity5}.to raise_error(RuntimeError,"Activity already exists")
-				expect {@act << activity6}.to raise_error(RuntimeError,"Activity already exists")
-				expect {@act << activity7}.to raise_error(RuntimeError,"Activity already exists")
-				expect {@act << activity8}.to raise_error(RuntimeError,"Activity already exists")
+				expect {@act << activity5}.to raise_error(Activities::ActivityAlreadyExists,"Activity already exists")
+				expect {@act << activity6}.to raise_error(Activities::ActivityAlreadyExists,"Activity already exists")
+				expect {@act << activity7}.to raise_error(Activities::ActivityAlreadyExists,"Activity already exists")
+				expect {@act << activity8}.to raise_error(Activities::ActivityAlreadyExists,"Activity already exists")
 			end
 
 			it "cannot accept categories clashing with the registered ones" do
 				new_category = ActivityCategory.new("music")
-				expect {@act.register_category new_category}.to raise_error(RuntimeError,"Category already exists")
+				expect {@act.register_category new_category}.to raise_error(Activities::CategoryAlreadyExists,"Category already exists")
 			end
 			it "accepts additional categories" do
 				new_category = ActivityCategory.new("bingo")
@@ -152,7 +142,7 @@ module WeMeet
 			end
 			it "can remove categories, only if no activity is associated" do
 				category = ActivityCategory.new("sports")
-				expect {@act.remove_category category}.to raise_error(RuntimeError,"Category still associated to a registered activity")
+				expect {@act.remove_category category}.to raise_error(Activities::CategoryDependencyError,"Category still associated to a registered activity")
 				@act.list(category).each {|activity| @act.remove(activity.name)}
 				@act.remove_category category
 				expect(@act.list).not_to include category
