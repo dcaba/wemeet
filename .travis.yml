@@ -12,6 +12,8 @@ jdk:
 gemfile: 
  - gemfiles/Gemfile.rspec2   
  - gemfiles/Gemfile.rspec3   
+before_script: 
+ - "bin/we_meet_server &"
 script: 
  - rspec
  - bin/api_client 
