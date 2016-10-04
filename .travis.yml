@@ -12,4 +12,6 @@ jdk:
 gemfile: 
  - gemfiles/Gemfile.rspec2   
  - gemfiles/Gemfile.rspec3   
-script: rspec
+script: 
+ - rspec
+ - bin/api_client 
