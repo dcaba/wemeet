@@ -1,4 +1,4 @@
-require 'activity_category'
+require 'we_meet/activity_category'
 
 module WeMeet
 	describe ActivityCategory do

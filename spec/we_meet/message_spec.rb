@@ -1,5 +1,5 @@
-require 'message'
-require 'user'
+require 'we_meet/message'
+require 'we_meet/user'
 
 module WeMeet
 	describe Message do

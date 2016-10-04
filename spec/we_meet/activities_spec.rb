@@ -1,6 +1,6 @@
-require 'activity'
-require 'activities'
-require 'activity_category'
+require 'we_meet/activity'
+require 'we_meet/activities'
+require 'we_meet/activity_category'
 # implementation ideas: is this just an static and global enum? struct? object type pattern? singleton? 
 
 module WeMeet

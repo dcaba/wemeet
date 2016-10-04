@@ -1,7 +1,7 @@
 # encoding: utf-8
-require 'group'
-require 'user'
-require 'message'
+require 'we_meet/group'
+require 'we_meet/user'
+require 'we_meet/message'
 
 module WeMeet 
 	describe Group do

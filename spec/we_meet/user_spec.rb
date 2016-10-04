@@ -1,5 +1,5 @@
-require 'user'
-require 'group'
+require 'we_meet/user'
+require 'we_meet/group'
 
 module WeMeet 
 	describe User do
